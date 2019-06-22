@@ -53,12 +53,15 @@ public class PictureCross {
             if (solver.canSolve(board.getClueColumns().get(i), c)){
                char [] solvedColumn=solver.givenRow(board.getClueColumns().get(i), c);
                board.changeColumn(i, solvedColumn);
-               board.RemoveCompletedColumns(i);
+               board.removeCompletedColumns(i);
             }
             
         }
        
         Printing.printBoard(board);
+        for (Object i: board.getIncompletedColumns()){
+            System.out.print(i);
+        }
         
         
        
