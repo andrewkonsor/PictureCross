@@ -9,6 +9,7 @@ import java.io.IOException;
 public class Printing {
 
     public static void printBoard(Board board){
+        System.out.println();
         for (int i=0;i<board.getSize();i++){
             for (int j = 0; j < board.getSize(); j++) {
                 //board.getBoard()[i][j]='-';
@@ -18,6 +19,7 @@ public class Printing {
             }
             System.out.println();
         }
+        System.out.println("Print complete");
     }
     
     public static void print(char [] x){

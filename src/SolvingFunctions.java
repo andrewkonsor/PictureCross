@@ -37,7 +37,7 @@ public class SolvingFunctions {
      * @param row
      * @return boolean 
      */
-    public boolean isGivenRow (List<Integer> clue, char [] row){
+    public boolean canSolve (List<Integer> clue, char [] row){
        int size=row.length;
        int numFilledSpots=0;
        for (int i=0;i<clue.size();i++){
@@ -54,7 +54,7 @@ public class SolvingFunctions {
             int empty = row.length-clue.get(0);
             System.out.println(fill + " " + empty);
             for (int i=empty;i<fill+empty;i++){
-                if (!validChange(row[i],'o')){
+                if (!Board.validChange(row[i],'o')){
                     System.out.println("invalid change");
                     break;
                 }
@@ -81,17 +81,13 @@ public class SolvingFunctions {
         return false;
     }
     
-    public boolean validChange (char x, char y){
-        if (x=='o'&&y=='x') return false;
-        else if (x=='x'&&y=='o') return false;
-        return true;
-    }
+
     
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
         int size = 8;
-        clue.add(6);
+        clue.add(8);
 
         
         
@@ -100,6 +96,7 @@ public class SolvingFunctions {
          row[i]='-';
         }
         
+        System.out.println(solver.canSolve(clue, row));
         
 
         String s = new String(row);
