@@ -1,6 +1,8 @@
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -38,17 +40,27 @@ public class PictureCross {
         Printing.printBoard(board);
         
         for (int i=0;i<board.getSize();i++){
-            char [] s = board.getRow(i);
-            if (solver.canSolve(board.getClueRows().get(i), s)){
-               solver.givenRow(board.getClueRows().get(i), s);
+            char [] r = board.getRow(i);
+            char [] c = board.getColumn(i);
+            
+            //Solve Given Columns and Rows
+            if (solver.canSolve(board.getClueRows().get(i), r)){
+               char [] solvedRow=solver.givenRow(board.getClueRows().get(i), r);
+               board.changeRow(i, solvedRow);
+               board.removeCompletedRows(i);
+            }
+            
+            if (solver.canSolve(board.getClueColumns().get(i), c)){
+               char [] solvedColumn=solver.givenRow(board.getClueColumns().get(i), c);
+               board.changeColumn(i, solvedColumn);
+               board.RemoveCompletedColumns(i);
             }
             
         }
-        char [] testRow = {'o','-','-','-','o','-','-','-'};
-        board.changeColumn(2, testRow);
-        board.changeRow(0, testRow);
-        Printing.printBoard(board);
        
+        Printing.printBoard(board);
+        
+        
        
        
     }

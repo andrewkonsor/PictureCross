@@ -1,4 +1,5 @@
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,8 @@ public class Board {
     private char [][] board; 
     private List<List<Integer>> rows = new ArrayList<>();
     private List<List<Integer>> columns= new ArrayList<>();
-    private boolean [] completedRows;
-    private boolean [] completedColumns;
+    private List<Integer> incompletedRows= new ArrayList<>();
+    private List<Integer> incompletedColumns = new ArrayList<>();
     
     public int getSize() {
         return size;
@@ -47,7 +48,24 @@ public class Board {
     public void setSpot(char c,int row,int column) {
         this.board [row][column] = c;
     }
+
+    public List getCompletedRows() {
+        return incompletedRows;
+    }
+
+    public void removeCompletedRows(int rowNumber){
+        incompletedRows.remove(rowNumber);
+    }    
     
+    public List getCompletedColumns() {
+        return incompletedColumns;
+    }
+    
+
+    public void RemoveCompletedColumns(int colNumber){
+        incompletedColumns.remove(colNumber);
+    }
+
     public char [] getRow(int n){
         char [] row = new char[size];
         for (int i= 0;i<size;i++){
@@ -113,8 +131,12 @@ public class Board {
     public Board(int size) {
         this.size = size;
         board = new char[size][size];
-        completedRows = new boolean[size];
-        completedColumns = new boolean[size];
+        
+        for (int i=0;i<size;i++){
+         incompletedColumns.add(i);
+         incompletedRows.add(i);
+        }
+
         for (int i=0;i<size;i++){
             for (int j = 0; j < size; j++) {
                 this.board[i][j]='-';
