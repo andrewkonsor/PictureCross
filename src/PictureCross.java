@@ -39,11 +39,14 @@ public class PictureCross {
         Board board = PictureCross.createBoard();
         Printing.printBoard(board);
         
+        
+        //Solve Given Columns and Rows
+        System.out.println("Solve Given R/C");
         for (int i=0;i<board.getSize();i++){
             char [] r = board.getRow(i);
             char [] c = board.getColumn(i);
             
-            //Solve Given Columns and Rows
+            
             if (solver.canSolve(board.getClueRows().get(i), r)){
                char [] solvedRow=solver.givenRow(board.getClueRows().get(i), r);
                board.changeRow(i, solvedRow);
@@ -59,9 +62,17 @@ public class PictureCross {
         }
        
         Printing.printBoard(board);
-        for (Object i: board.getIncompletedColumns()){
-            System.out.print(i);
-        }
+        
+        /*for (Object i:board.getinCompletedRows()){
+            int x = (Integer) i;
+            char [] k = solver.completeRow(board.getClueRows().get(x), board.getRow(x));
+            board.changeRow(x, k);
+        }*/
+        
+        System.out.println(board.getIncompletedColumns());
+
+
+
         
         
        

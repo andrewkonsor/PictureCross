@@ -49,20 +49,20 @@ public class Board {
         this.board [row][column] = c;
     }
 
-    public List getCompletedRows() {
+    public List getinCompletedRows() {
         return incompletedRows;
     }
 
-    public void removeCompletedRows(int rowNumber){
+    public void removeCompletedRows(Integer rowNumber){
         incompletedRows.remove(rowNumber);
     }    
     
-    public List getCompletedColumns() {
+    public List<Integer> getIncompletedColumns() {
         return incompletedColumns;
     }
     
 
-    public void RemoveCompletedColumns(int colNumber){
+    public void removeCompletedColumns(Integer colNumber){
         incompletedColumns.remove(colNumber);
     }
 

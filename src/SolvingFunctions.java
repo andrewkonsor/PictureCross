@@ -76,9 +76,35 @@ public class SolvingFunctions {
      * @return  
      */
     public boolean isFinished (List<Integer> clue, char [] row){
-        String s = new String(row);
-        System.out.println(s);
-        return false;
+        //String s = new String(row);
+        //System.out.println(s);
+        int count =0;
+        List<Integer> resultList = new ArrayList<>();
+        
+        for (int c=0;c<row.length;c++){
+            if (row[c]=='o'){
+                count++;
+                if (c==row.length-1){
+                    resultList.add(count);
+                }
+            }
+            else if (count>0){
+                resultList.add(count);
+                count=0;
+            }
+        }
+        
+        return resultList.equals(clue);
+    }
+    
+    public char [] completeRow(List<Integer> clue, char [] row){
+        if (isFinished(clue, row)){
+            String s= new String (row);
+            for (int i=0;i<row.length;i++){
+                if (row[i]=='-') row[i]='x';
+            }
+        }
+        return row;
     }
     
 
@@ -86,21 +112,19 @@ public class SolvingFunctions {
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
+        String s = "--oooo--";
+        
         int size = 8;
-        clue.add(8);
-
-        
-        
-        char [] row = new char[size];
-        for (int i=0;i<size;i++){
-         row[i]='-';
-        }
-        
-        System.out.println(solver.canSolve(clue, row));
+        clue.add(4);
         
 
-        String s = new String(row);
-        System.out.println(s);
+        
+        char [] row=s.toCharArray();
+        
+        
+       solver.completeRow(clue, row);
+       String k= new String (row);
+        System.out.println(k);
         
     }
 }
