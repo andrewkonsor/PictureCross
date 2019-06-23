@@ -1,4 +1,5 @@
 
+import java.awt.Dialog;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -63,13 +64,18 @@ public class PictureCross {
        
         Printing.printBoard(board);
         
-        /*for (Object i:board.getinCompletedRows()){
-            int x = (Integer) i;
-            char [] k = solver.completeRow(board.getClueRows().get(x), board.getRow(x));
-            board.changeRow(x, k);
-        }*/
+        //Check for finished rows
+        for (int r: (ArrayList<Integer>) board.getIncompletedRows()){
+            
+            
+            if (solver.isFinished(board.getClueRows().get(r),board.getRow(r))){
+                char [] newRow = solver.completeRow(board.getClueRows().get(r), board.getRow(r));
+                board.changeRow(r, newRow);
+                board.removeCompletedRows(r);
+           }
+        }
         
-        System.out.println(board.getIncompletedColumns());
+        Printing.printBoard(board);
 
 
 
