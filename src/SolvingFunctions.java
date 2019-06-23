@@ -98,13 +98,46 @@ public class SolvingFunctions {
     }
     
     public char [] completeRow(List<Integer> clue, char [] row){
+        char [] result = new char[row.length]; 
         if (isFinished(clue, row)){
             String s= new String (row);
             for (int i=0;i<row.length;i++){
-                if (row[i]=='-') row[i]='x';
+                if (row[i]=='-') result[i]='x';
+                else result[i]= 'o';
             }
         }
-        return row;
+        return result;
+    }
+    
+    public char [] edgeSolve (List<Integer> clue, char [] row){
+        char [] result = row;
+        int firstClue= clue.get(0);
+        int lastClue= clue.get(clue.size()-1);
+        
+        for (int i=0;i<firstClue;i++){
+            if (row[i]=='o'){
+                for (int j=0;j<firstClue-i;j++){
+                 result [j+i]= 'o';
+                }
+            if (row[0]=='o'&& firstClue<row.length) result[firstClue]='x';    
+            break;
+            }
+         
+        }
+        
+
+        for (int i=0;i<lastClue;i++){
+            if (row[row.length-i-1]=='o'){
+                for (int j=0;j<lastClue-i;j++){
+                    result [row.length-i-j-1] = 'o';
+                }
+                if (row [row.length-1] == 'o'&& lastClue<row.length) result [row.length-lastClue-1] = 'x';
+                break;
+            }
+        }
+ 
+        
+        return result;
     }
     
 
@@ -112,19 +145,22 @@ public class SolvingFunctions {
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
-        String s = "--oooo--";
+        String s = "---o-o--";
         
         int size = 8;
-        clue.add(4);
+        clue.add(8);
+
         
 
         
         char [] row=s.toCharArray();
+        System.out.println(row);
         
-        
-       solver.completeRow(clue, row);
+       row=solver.edgeSolve(clue, row);
        String k= new String (row);
         System.out.println(k);
+        
+        
         
     }
 }
