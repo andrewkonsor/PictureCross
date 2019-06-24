@@ -38,6 +38,7 @@ public class PictureCross {
     public static void main(String[] args) {
        SolvingFunctions solver = new SolvingFunctions();
         Board board = PictureCross.createBoard();
+        ArrayList<Integer> completed = new ArrayList<>();
         Printing.printBoard(board);
         
         
@@ -65,24 +66,63 @@ public class PictureCross {
         Printing.printBoard(board);
         
         //Check for finished rows
-        for (int r: (ArrayList<Integer>) board.getIncompletedRows()){
-            
-            
+        
+        for (int r: (ArrayList<Integer>)board.getIncompletedRows()){
             if (solver.isFinished(board.getClueRows().get(r),board.getRow(r))){
                 char [] newRow = solver.completeRow(board.getClueRows().get(r), board.getRow(r));
                 board.changeRow(r, newRow);
-                board.removeCompletedRows(r);
+                completed.add(r);
            }
+           
+        }
+        
+        for (int r:completed){
+            board.removeCompletedRows(r);
+        }
+        
+        completed.clear();
+        for (int c: (ArrayList<Integer>) board.getIncompletedColumns()){
+            if (solver.isFinished(board.getClueColumns().get(c), board.getColumn(c))){
+                char [] newCol = solver.completeRow(board.getClueColumns().get(c), board.getColumn(c));
+                board.changeColumn(c, newCol);
+                completed.add(c);
+            }
+        }
+        
+        for (int c:completed){
+            board.removeCompletedColumns(c);
         }
         
         Printing.printBoard(board);
 
+        for (int r: (ArrayList<Integer>)board.getIncompletedRows()){
+            if (solver.canSolve(board.getClueRows().get(r), board.getRow(r))){
+                char [] newRow = solver.solveRow(board.getClueRows().get(r), board.getRow(r));
+                board.changeRow(r, newRow);
+                completed.add(r);
+            }
+        }
+        
+        for (int r:completed){
+            board.removeCompletedRows(r);
+        }
 
 
+            for (int c: (ArrayList<Integer>)board.getIncompletedColumns()){
+            if (solver.canSolve(board.getClueColumns().get(c), board.getRow(c))){
+                char [] newCol = solver.solveRow(board.getClueColumns().get(c), board.getRow(c));
+                board.changeRow(c, newCol);
+                completed.add(c);
+            }
+        }
         
+        for (int c:completed){
+            board.removeCompletedColumns(c);
+        }
+        Printing.printBoard(board);
         
-       
-       
+        if (solver.puzzleSolved(board)) System.out.println("\n Puzzle Solved!!!");
+
     }
 
 }
