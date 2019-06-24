@@ -49,7 +49,7 @@ public class Board {
         this.board [row][column] = c;
     }
 
-    public List getIncompletedRows() {
+    public List<Integer> getIncompletedRows() {
         return incompletedRows;
     }
 

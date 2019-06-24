@@ -40,11 +40,39 @@ public class SolvingFunctions {
     public boolean canSolve (List<Integer> clue, char [] row){
        int size=row.length;
        int numFilledSpots=0;
+       
+       for (int i=0;i<row.length;i++){
+           if (row[i]=='x') numFilledSpots++;
+           else break;
+       }
+       
+       for (int i=0;i<row.length;i++){
+           if (row[row.length-i-1]=='x') numFilledSpots++;
+           else break;
+       }
+       
+       for (int i=0;i<row.length-1;i++){
+           if (row[i]== 'x' && row[i+1] == 'x') numFilledSpots++;
+       }
+       
        for (int i=0;i<clue.size();i++){
            numFilledSpots=numFilledSpots+clue.get(i);
        }
        
        return numFilledSpots+clue.size()-1==size;
+    }
+    
+    public char [] solveRow (List<Integer> clue, char [] row){
+        char [] result = new char[row.length];
+        if (canSolve(clue, row)){
+            for (int i=0;i<row.length;i++){
+                if (row [i]!='x') result[i]='o';
+                else result[i]='x';
+        }
+            
+        }
+        System.out.println(result);
+        return result;
     }
     
     public char [] partialSingleClue (List<Integer> clue, char [] row){
@@ -100,10 +128,10 @@ public class SolvingFunctions {
     public char [] completeRow(List<Integer> clue, char [] row){
         char [] result = new char[row.length]; 
         if (isFinished(clue, row)){
-            String s= new String (row);
             for (int i=0;i<row.length;i++){
                 if (row[i]=='-') result[i]='x';
-                else result[i]= 'o';
+                else if (row[i]=='o') result[i]='o';
+                else result[i]= 'x';
             }
         }
         return result;
@@ -140,27 +168,26 @@ public class SolvingFunctions {
         return result;
     }
     
-
+    public boolean puzzleSolved (Board board){
+        return board.getIncompletedColumns().isEmpty() && board.getIncompletedColumns().isEmpty();
+    }
     
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
-        String s = "---o-o--";
+        String s = "x-oooo-x";
         
         int size = 8;
-        clue.add(8);
+        clue.add(6);
 
         
 
         
         char [] row=s.toCharArray();
-        System.out.println(row);
-        
-       row=solver.edgeSolve(clue, row);
-       String k= new String (row);
-        System.out.println(k);
-        
+        solver.solveRow(clue, row);
         
         
     }
+    
+    
 }
