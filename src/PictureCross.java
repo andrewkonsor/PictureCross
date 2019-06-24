@@ -27,7 +27,7 @@ public class PictureCross {
         } catch (Exception e) {
         }
         */
-        size=8;
+        size=10;
         Board board = new Board(size);
 
            return board;

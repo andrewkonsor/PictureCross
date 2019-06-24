@@ -149,22 +149,29 @@ public class Board {
         rows.add(new ArrayList<>());
         columns.add(new ArrayList<>());
         }
-        rows.get(0).add(4);
-        rows.get(1).add(6);
-        rows.get(2).add(8);
-        rows.get(3).add(8);
+        rows.get(0).add(3);
+        rows.get(1).add(3);
+        rows.get(2).add(3);
+        rows.get(3).add(4);
         rows.get(4).add(8);
-        rows.get(5).add(8);
-        rows.get(6).add(6);
-        rows.get(7).add(4);
-        columns.get(0).add(4);
-        columns.get(1).add(6);
-        columns.get(2).add(8);
-        columns.get(3).add(8);
-        columns.get(4).add(8);
-        columns.get(5).add(8);
-        columns.get(6).add(6);
-        columns.get(7).add(4);
+        rows.get(5).add(9);
+        rows.get(6).add(8);
+        rows.get(7).add(9);
+        rows.get(8).add(8);
+        rows.get(9).add(4);
+        rows.get(9).add(2);
+        columns.get(0).add(2);
+        columns.get(1).add(5);
+        columns.get(2).add(6);
+        columns.get(3).add(6);
+        columns.get(4).add(6);
+        columns.get(5).add(2);
+        columns.get(5).add(5);
+        columns.get(6).add(9);
+        columns.get(7).add(10);
+        columns.get(8).add(6);
+        columns.get(8).add(1);
+        columns.get(9).add(3);
     }
     
     
