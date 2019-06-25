@@ -128,27 +128,8 @@ public class Board {
         return true;
     }
     
-    public Board(int size) {
-        this.size = size;
-        board = new char[size][size];
+    public void board1Clues(){
         
-        for (int i=0;i<size;i++){
-         incompletedColumns.add(i);
-         incompletedRows.add(i);
-        }
-
-        for (int i=0;i<size;i++){
-            for (int j = 0; j < size; j++) {
-                this.board[i][j]='-';
-            }
-        }
-
-        
-        //Hard Coded values
-        for (int i=0;i<size;i++){
-        rows.add(new ArrayList<>());
-        columns.add(new ArrayList<>());
-        }
         rows.get(0).add(3);
         rows.get(1).add(3);
         rows.get(2).add(3);
@@ -172,6 +153,32 @@ public class Board {
         columns.get(8).add(6);
         columns.get(8).add(1);
         columns.get(9).add(3);
+    }
+    
+    public Board(int size) {
+        this.size = size;
+        board = new char[size][size];
+        
+        for (int i=0;i<size;i++){
+         incompletedColumns.add(i);
+         incompletedRows.add(i);
+        }
+
+        for (int i=0;i<size;i++){
+            for (int j = 0; j < size; j++) {
+                this.board[i][j]='-';
+            }
+        }
+
+        
+        
+        for (int i=0;i<size;i++){
+        rows.add(new ArrayList<>());
+        columns.add(new ArrayList<>());
+        }
+        
+        //Hard Coded values
+        board1Clues();
     }
     
     
