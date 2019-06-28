@@ -455,6 +455,10 @@ public class SolvingFunctions {
         }
         return changed;
     }
+    
+    public boolean canEdgeSolve (char [] row){
+        return row[0] == 'o' || row[row.length-1]== 'o';
+    }
 
     public char[] edgeSolve(List<Integer> clue, char[] row) {
         char[] result = row;
@@ -491,9 +495,32 @@ public class SolvingFunctions {
     }
     
     
-    /*public boolean boardEdgeSolve (Board board){
-        
-    }*/
+    public boolean boardEdgeSolve (Board board){
+
+        boolean changed=false;
+        for (int r : (ArrayList<Integer>) board.getIncompletedRows()) {
+            if (canEdgeSolve(board.getRow(r))) {
+                char[] newRow = edgeSolve(board.getClueRows().get(r), board.getRow(r));
+                board.changeRow(r, newRow);
+                changed=true;
+            }
+
+        }
+
+        for (int c : (ArrayList<Integer>) board.getIncompletedColumns()) {
+            if (isFinished(board.getClueColumns().get(c), board.getColumn(c))) {
+                char[] newCol = edgeSolve(board.getClueColumns().get(c), board.getColumn(c));
+                board.changeColumn(c, newCol);
+                changed=true;
+            }
+        }
+
+        if (changed) {
+            System.out.println("Solve Edge R/C");
+            Printing.printBoard(board);
+        }
+        return changed;
+    }
 
     public boolean puzzleSolved(Board board) {
         return board.getIncompletedColumns().isEmpty() && board.getIncompletedColumns().isEmpty();

@@ -60,7 +60,8 @@ public class PictureCross {
         //Solve Caped single clues
         if (solver.boardSolveSingleClueCapped(board)) isProgressing=true;
         
-        
+        //Solve Edges
+        if (solver.boardEdgeSolve(board)) isProgressing=true;
         
         } while (isProgressing && board.getIncompletedColumns().size()>0);
 

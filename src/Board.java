@@ -177,6 +177,7 @@ public class Board {
     }
     
     public void board3Clues (){
+        
         rows.get(0).add(4);
         rows.get(1).add(6);
         rows.get(2).add(7);
@@ -194,6 +195,39 @@ public class Board {
         columns.get(6).add(8);
         columns.get(7).add(1);
         columns.get(7).add(1);
+    }
+    
+    public void board4Clues(){
+        rows.get(0).add(1);
+        rows.get(0).add(6);
+        rows.get(1).add(5);
+        rows.get(2).add(1);
+        rows.get(2).add(4);
+        rows.get(3).add(2);
+        rows.get(3).add(3);
+        rows.get(4).add(3);
+        rows.get(4).add(2);
+        rows.get(5).add(4);
+        rows.get(5).add(1);
+        rows.get(6).add(5);
+        rows.get(7).add(6);
+        rows.get(7).add(1);
+        
+        columns.get(0).add(1);
+        columns.get(0).add(6);
+        columns.get(1).add(5);
+        columns.get(2).add(1);
+        columns.get(2).add(4);
+        columns.get(3).add(2);
+        columns.get(3).add(3);
+        columns.get(4).add(3);
+        columns.get(4).add(2);
+        columns.get(5).add(4);
+        columns.get(5).add(1);
+        columns.get(6).add(5);
+        columns.get(7).add(6);
+        columns.get(7).add(1);
+        
     }
     
     public Board(int size) {
@@ -219,7 +253,7 @@ public class Board {
         }
         
         //Hard Coded values
-        board3Clues();
+        board4Clues();
     }
     
     
