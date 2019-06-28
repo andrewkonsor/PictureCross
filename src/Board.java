@@ -230,6 +230,31 @@ public class Board {
         
     }
     
+    public void board5Clues(){
+        rows.get(0).add(8);
+        rows.get(1).add(6);
+        rows.get(2).add(6);
+        rows.get(3).add(8);
+        rows.get(4).add(2);
+        rows.get(5).add(2);
+        rows.get(6).add(2);
+        rows.get(7).add(1);
+        rows.get(7).add(1);
+
+        columns.get(0).add(1);
+        columns.get(0).add(1);
+        columns.get(1).add(4);
+        columns.get(2).add(4);
+        columns.get(2).add(1);
+        columns.get(3).add(7);
+        columns.get(4).add(7);
+        columns.get(5).add(4);
+        columns.get(5).add(1);
+        columns.get(6).add(4);
+        columns.get(7).add(1);
+        columns.get(7).add(1);
+    }
+    
     public Board(int size) {
         this.size = size;
         board = new char[size][size];
@@ -253,7 +278,7 @@ public class Board {
         }
         
         //Hard Coded values
-        board4Clues();
+        board5Clues();
     }
     
     
