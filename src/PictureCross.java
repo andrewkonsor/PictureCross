@@ -38,45 +38,27 @@ public class PictureCross {
     public static void main(String[] args) {
        SolvingFunctions solver = new SolvingFunctions();
         Board board = PictureCross.createBoard();
-        ArrayList<Integer> completed = new ArrayList<>();
+        boolean isProgressing= false;
         Printing.printBoard(board);
         
         //Solve Given
         solver.boardGivenRows(board);
-        Printing.printBoard(board);
         
+        do {            
+           isProgressing=false;
         //Check for finished rows
-        solver.boardCompleteRows(board);
-        Printing.printBoard(board);
+        if(solver.boardCompleteRows(board)) isProgressing=true;
         
-        
+            System.out.println("Test");
         //Solve Solvable Rows
-        for (int r: (ArrayList<Integer>)board.getIncompletedRows()){
-            if (solver.canSolve(board.getClueRows().get(r), board.getRow(r))){
-                char [] newRow = solver.solveRow(board.getClueRows().get(r), board.getRow(r));
-                board.changeRow(r, newRow);
-                completed.add(r);
-            }
-        }
+        if(solver.boardSolveRows(board)) isProgressing=true;
         
-        for (int r:completed){
-            board.removeCompletedRows(r);
-        }
+        
+        } while (isProgressing);
 
-
-            for (int c: (ArrayList<Integer>)board.getIncompletedColumns()){
-            if (solver.canSolve(board.getClueColumns().get(c), board.getRow(c))){
-                char [] newCol = solver.solveRow(board.getClueColumns().get(c), board.getRow(c));
-                board.changeRow(c, newCol);
-                completed.add(c);
-            }
-        }
         
-        for (int c:completed){
-            board.removeCompletedColumns(c);
-        }
-        Printing.printBoard(board);
         
+        if (!isProgressing) System.out.println("Stuck");
         if (solver.puzzleSolved(board)) System.out.println("\n Puzzle Solved!!!");
 
     }
