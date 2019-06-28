@@ -201,9 +201,73 @@ public class SolvingFunctions {
             board.changeColumn(c, newCol);     
         }
     }
+    
+    
+    
 
-    public char[] isSingleClueWithGaps(List<Integer> clue, char[] row) {
-        return row;
+    public boolean isSingleClueWithGaps(List<Integer> clue, char[] row) {
+        boolean hasGap = false;
+        String s = new String(row);
+        if (clue.size() == 1) {
+
+            int first = s.indexOf("o");
+            int last = s.lastIndexOf("o");
+            if (first != last) {
+                for (int i = 0; i < last - first - 1; i++) {
+                    if (row[first + i + 1] == '-') {
+                        return true;
+                    }
+
+                }
+            }
+
+        }
+        return hasGap;
+    }
+
+    public char[] fillSingleClueWithGaps(List<Integer> clue, char[] row) {
+        char[] result = row;
+        String s = new String(row);
+        int first = s.indexOf("o");
+        int last = s.lastIndexOf("o");
+
+        for (int i = 0; i < last - first - 1; i++) {
+            result[first+i + 1] = 'o';
+        }
+
+        return result;
+    }
+    
+    public boolean boardFillSingleClueWithGaps(Board board) {
+        boolean isChanged = false;
+
+        for (int r : (ArrayList<Integer>) board.getIncompletedRows()) {
+
+            if (isSingleClueWithGaps(board.getClueRows().get(r), board.getRow(r))) {
+                char[] newRow = fillSingleClueWithGaps(board.getClueRows().get(r), board.getRow(r));
+                board.changeRow(r, newRow);
+                isChanged=true;
+            }
+
+        }
+
+
+        for (int c : (ArrayList<Integer>) board.getIncompletedColumns()) {
+                
+            if (isSingleClueWithGaps(board.getClueColumns().get(c), board.getColumn(c))){
+                char[] newCol = fillSingleClueWithGaps(board.getClueColumns().get(c), board.getColumn(c));
+                board.changeColumn(c, newCol);
+                isChanged=true;
+            }
+              
+        }
+        
+        if (isChanged){
+            System.out.println("Fill Gaps in Single Clue R/C");
+            Printing.printBoard(board);
+        }
+        
+        return isChanged;
     }
     
     
@@ -340,13 +404,15 @@ public class SolvingFunctions {
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
-        String s = "x-oooo-x";
-
+        String s = "--oo-o--";
+        char [] row = s.toCharArray();
+        char [] result = new char[row.length]; 
         int size = 8;
-        clue.add(6);
+        clue.add(4);
 
-        char[] row = s.toCharArray();
-        solver.solveRow(clue, row);
+        boolean hasGap=false;
+ 
+        System.out.println(solver.fillSingleClueWithGaps(clue, row));
 
     }
 

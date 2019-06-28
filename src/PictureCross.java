@@ -54,6 +54,10 @@ public class PictureCross {
         //Solve Solvable Rows
         if(solver.boardSolveRows(board)) isProgressing=true;
         
+        //Fill gaps in single clue rows
+        if (solver.boardFillSingleClueWithGaps(board)) isProgressing=true;
+        
+        
         
         
         
