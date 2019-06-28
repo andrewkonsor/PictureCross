@@ -45,7 +45,7 @@ public class PictureCross {
         solver.boardGivenRows(board);
         //Solve Partial single R/C
         solver.boardPartialSingleClue(board);
-        Printing.printBoard(board);
+        //Printing.printBoard(board);
         do {            
            isProgressing=false;
         //Check for finished rows
@@ -57,7 +57,8 @@ public class PictureCross {
         //Fill gaps in single clue rows
         if (solver.boardFillSingleClueWithGaps(board)) isProgressing=true;
         
-        
+        //Solve Caped single clues
+        if (solver.boardSolveSingleClueCapped(board)) isProgressing=true;
         
         
         

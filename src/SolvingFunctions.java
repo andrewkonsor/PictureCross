@@ -72,10 +72,13 @@ public class SolvingFunctions {
     public boolean canSolve(List<Integer> clue, char[] row) {
         int size = row.length;
         int numFilledSpots = 0;
-
+        int beggining=0;
+        int ending=0;
+        
         for (int i = 0; i < row.length; i++) {
             if (row[i] == 'x') {
                 numFilledSpots++;
+                beggining++;
             } else {
                 break;
             }
@@ -84,12 +87,13 @@ public class SolvingFunctions {
         for (int i = 0; i < row.length; i++) {
             if (row[row.length - i - 1] == 'x') {
                 numFilledSpots++;
+                ending++;
             } else {
                 break;
             }
         }
 
-        for (int i = 0; i < row.length - 1; i++) {
+        for (int i = 0; i < row.length - beggining - ending; i++) {
             if (row[i] == 'x' && row[i + 1] == 'x') {
                 numFilledSpots++;
             }
@@ -126,6 +130,8 @@ public class SolvingFunctions {
                 char[] newRow = solveRow(board.getClueRows().get(r), board.getRow(r));
                 board.changeRow(r, newRow);
                 completed.add(r);
+                System.out.println("Solved Row " + r);
+                Printing.printBoard(board);
             }
         }
 
@@ -141,6 +147,8 @@ public class SolvingFunctions {
                 char[] newCol = solveRow(board.getClueColumns().get(c), board.getColumn(c));
                 board.changeColumn(c, newCol);
                 completed.add(c);
+                System.out.println("Solved Column " + c);
+                Printing.printBoard(board);
             }
         }
 
@@ -158,6 +166,12 @@ public class SolvingFunctions {
         return isChanged;
     }
 
+    
+    //Functions to solve rows with single clues
+    
+    
+    
+    
     /**
      * Solve cells for partially solved clues
      * @param clue
@@ -200,6 +214,9 @@ public class SolvingFunctions {
             char[] newCol = partialSingleClue(board.getClueColumns().get(c), board.getColumn(c));
             board.changeColumn(c, newCol);     
         }
+        
+        System.out.println("Partially solve single clues");
+        Printing.printBoard(board);
     }
     
     
@@ -268,6 +285,87 @@ public class SolvingFunctions {
         }
         
         return isChanged;
+    }
+    
+    
+    public boolean isSingleClueCapped (List<Integer> clue, char[] row){
+        String r = new String(row);
+        return (r.contains("ox") || r.contains("xo")) && clue.size()==1;
+    }
+    
+    public char [] solveSingleClueCapped (List<Integer> clue, char[] row){
+        char [] result = new char[row.length];
+        if (isSingleClueCapped(clue, row)){
+            String r = new String(row);
+            int start = r.indexOf("xo");
+            int end = r.indexOf("ox");
+            int c = clue.get(0);
+            
+            if (start>-1){
+                
+                for (int i=0;i<row.length;i++){
+                    if (i<=start)result[i]='x';
+                    else if (i<=start+c) result[i] = 'o';
+                    else result[i]= 'x';
+                }
+            }
+            
+            else if (end>-1){
+                for (int i=0;i<row.length;i++){
+                    if (i<=end-c)result[i]='x';
+                    else if (i<=end) result[i] = 'o';
+                    else result[i]= 'x';
+                }
+                
+            }
+            
+            
+        }
+        
+        return result;
+    }
+    
+    public boolean boardSolveSingleClueCapped (Board board){
+        boolean changed = false;
+        ArrayList<Integer> completed = new ArrayList<>();
+
+        for (int r : (ArrayList<Integer>) board.getIncompletedRows()) {
+            if (isSingleClueCapped(board.getClueRows().get(r), board.getRow(r))) {
+                char[] newRow = solveSingleClueCapped(board.getClueRows().get(r), board.getRow(r));
+                board.changeRow(r, newRow);
+                completed.add(r);
+            }
+
+        }
+        if (completed.size() > 0) {
+            changed = true;
+        }
+        for (int r : completed) {
+            board.removeCompletedRows(r);
+        }
+
+        completed.clear();
+
+        for (int c : (ArrayList<Integer>) board.getIncompletedColumns()) {
+            if (isSingleClueCapped(board.getClueColumns().get(c), board.getColumn(c))) {
+                char[] newCol = solveSingleClueCapped(board.getClueColumns().get(c), board.getColumn(c));
+                board.changeColumn(c, newCol);
+                completed.add(c);
+            }
+        }
+
+        if (completed.size() > 0) {
+            changed = true;
+        }
+        for (int c : completed) {
+            board.removeCompletedColumns(c);
+        }
+
+        if (changed) {
+            System.out.println("Solve Completed R/C");
+            Printing.printBoard(board);
+        }
+        return changed;
     }
     
     
@@ -404,15 +502,16 @@ public class SolvingFunctions {
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
-        String s = "--oo-o--";
+        String s = "----ox--";
         char [] row = s.toCharArray();
         char [] result = new char[row.length]; 
         int size = 8;
-        clue.add(4);
+        clue.add(3);
 
         boolean hasGap=false;
  
-        System.out.println(solver.fillSingleClueWithGaps(clue, row));
+        System.out.println(solver.solveSingleClueCapped(clue, row));
+        System.out.println(s.indexOf("ox"));
 
     }
 
