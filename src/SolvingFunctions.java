@@ -33,6 +33,10 @@ public class SolvingFunctions {
         return row;
     }
 
+    /**
+     * Solve all the given clues
+     * @param board 
+     */
     public void boardGivenRows(Board board) {
 
         System.out.println("\nSolve Given R/C");
@@ -133,9 +137,9 @@ public class SolvingFunctions {
         }
 
         for (int c : (ArrayList<Integer>) board.getIncompletedColumns()) {
-            if (canSolve(board.getClueColumns().get(c), board.getRow(c))) {
-                char[] newCol = solveRow(board.getClueColumns().get(c), board.getRow(c));
-                board.changeRow(c, newCol);
+            if (canSolve(board.getClueColumns().get(c), board.getColumn(c))) {
+                char[] newCol = solveRow(board.getClueColumns().get(c), board.getColumn(c));
+                board.changeColumn(c, newCol);
                 completed.add(c);
             }
         }
@@ -154,15 +158,22 @@ public class SolvingFunctions {
         return isChanged;
     }
 
+    /**
+     * Solve cells for partially solved clues
+     * @param clue
+     * @param row
+     * @return 
+     */
     public char[] partialSingleClue(List<Integer> clue, char[] row) {
 
+        
         if (clue.size() == 1 && row.length - clue.get(0) < (double) row.length / 2) {
             int fill = clue.get(0) - (row.length - clue.get(0));
             int empty = row.length - clue.get(0);
-            System.out.println(fill + " " + empty);
+            
             for (int i = empty; i < fill + empty; i++) {
                 if (!Board.validChange(row[i], 'o')) {
-                    System.out.println("invalid change");
+                    
                     break;
                 }
                 row[i] = 'o';
@@ -170,10 +181,32 @@ public class SolvingFunctions {
         }
         return row;
     }
+    
+    /**
+     * Solve as many cells for singled clues
+     * @param board 
+     */
+    public void boardPartialSingleClue(Board board){
+
+        for (int r : (ArrayList<Integer>) board.getIncompletedRows()) {
+            
+            char[] newRow = partialSingleClue(board.getClueRows().get(r), board.getRow(r));
+            board.changeRow(r, newRow);           
+        }
+
+
+        for (int c : (ArrayList<Integer>) board.getIncompletedColumns()) {
+                
+            char[] newCol = partialSingleClue(board.getClueColumns().get(c), board.getColumn(c));
+            board.changeColumn(c, newCol);     
+        }
+    }
 
     public char[] isSingleClueWithGaps(List<Integer> clue, char[] row) {
         return row;
     }
+    
+    
 
     /**
      * Is Correct
@@ -278,6 +311,7 @@ public class SolvingFunctions {
             }
 
         }
+        
 
         for (int i = 0; i < lastClue; i++) {
             if (row[row.length - i - 1] == 'o') {
@@ -293,6 +327,11 @@ public class SolvingFunctions {
 
         return result;
     }
+    
+    
+    /*public boolean boardEdgeSolve (Board board){
+        
+    }*/
 
     public boolean puzzleSolved(Board board) {
         return board.getIncompletedColumns().isEmpty() && board.getIncompletedColumns().isEmpty();

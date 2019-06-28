@@ -43,24 +43,27 @@ public class PictureCross {
         
         //Solve Given
         solver.boardGivenRows(board);
-        
+        //Solve Partial single R/C
+        solver.boardPartialSingleClue(board);
+        Printing.printBoard(board);
         do {            
            isProgressing=false;
         //Check for finished rows
         if(solver.boardCompleteRows(board)) isProgressing=true;
-        
-            System.out.println("Test");
+
         //Solve Solvable Rows
         if(solver.boardSolveRows(board)) isProgressing=true;
         
         
-        } while (isProgressing);
+        
+        
+        } while (isProgressing && board.getIncompletedColumns().size()>0);
 
         
         
-        if (!isProgressing) System.out.println("Stuck");
+        
         if (solver.puzzleSolved(board)) System.out.println("\n Puzzle Solved!!!");
-
+        else if (!isProgressing) System.out.println("Stuck");
     }
 
 }
