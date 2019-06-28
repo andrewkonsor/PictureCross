@@ -31,6 +31,31 @@ public class SolvingFunctions {
         return row;
     }
     
+        public void boardGivenRows(Board board){
+       
+        System.out.println("\nSolve Given R/C");
+        
+        for (int i=0;i<board.getSize();i++){
+            char [] r = board.getRow(i);
+            char [] c = board.getColumn(i);
+            
+            
+            if (canSolve(board.getClueRows().get(i), r)){
+               char [] solvedRow=givenRow(board.getClueRows().get(i), r);
+               board.changeRow(i, solvedRow);
+               board.removeCompletedRows(i);
+            }
+            
+            if (canSolve(board.getClueColumns().get(i), c)){
+               char [] solvedColumn=givenRow(board.getClueColumns().get(i), c);
+               board.changeColumn(i, solvedColumn);
+               board.removeCompletedColumns(i);
+            }
+            
+        }
+        
+    }
+    
     /**
      * Check if the row can be solved given the clue
      * @param clue
@@ -71,8 +96,13 @@ public class SolvingFunctions {
         }
             
         }
-        System.out.println(result);
         return result;
+    }
+    
+    public boolean boardSolveRows(Board board){
+     boolean isChanged= false;
+     
+     return isChanged;
     }
     
     public char [] partialSingleClue (List<Integer> clue, char [] row){
@@ -104,8 +134,7 @@ public class SolvingFunctions {
      * @return  
      */
     public boolean isFinished (List<Integer> clue, char [] row){
-        //String s = new String(row);
-        //System.out.println(s);
+        
         int count =0;
         List<Integer> resultList = new ArrayList<>();
         
@@ -135,6 +164,43 @@ public class SolvingFunctions {
             }
         }
         return result;
+    }
+    
+    public boolean boardCompleteRows(Board board){
+        System.out.println("Solve Completed R/C");
+        boolean changed = false;
+        ArrayList<Integer> completed = new ArrayList<>();
+        
+            for (int r: (ArrayList<Integer>)board.getIncompletedRows()){
+            if (isFinished(board.getClueRows().get(r),board.getRow(r))){
+                char [] newRow = completeRow(board.getClueRows().get(r), board.getRow(r));
+                board.changeRow(r, newRow);
+                completed.add(r);
+           }
+           
+        }
+        if (completed.size()>0) changed=true;
+        for (int r:completed){
+            board.removeCompletedRows(r);
+        }
+        
+        completed.clear();
+        
+        for (int c: (ArrayList<Integer>) board.getIncompletedColumns()){
+            if (isFinished(board.getClueColumns().get(c), board.getColumn(c))){
+                char [] newCol = completeRow(board.getClueColumns().get(c), board.getColumn(c));
+                board.changeColumn(c, newCol);
+                completed.add(c);
+            }
+        }
+        
+        if (completed.size()>0) changed=true;
+        for (int c:completed){
+            board.removeCompletedColumns(c);
+        }
+        
+        
+        return changed;
     }
     
     public char [] edgeSolve (List<Integer> clue, char [] row){
@@ -171,6 +237,11 @@ public class SolvingFunctions {
     public boolean puzzleSolved (Board board){
         return board.getIncompletedColumns().isEmpty() && board.getIncompletedColumns().isEmpty();
     }
+    
+    
+
+    
+    
     
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
