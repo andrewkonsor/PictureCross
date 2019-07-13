@@ -110,21 +110,36 @@ public class Board {
                 if (validChange(c, updated[i])){
                     setSpot(updated[i], i, n);
                 }
-                else System.err.println("Error at " + i + ":" + n);
+                //else System.err.println("Error at " + i + ":" + n);
             }
         i++;    
         }
     }
 
     public static boolean validChange (char prev, char now){
-        if (prev=='o'&&(now=='x'||now=='-')) {
+        if (prev=='o'&& now=='x') {
             System.err.println("Invalid Change");
             return false;
         }
-        else if (prev=='x'&&(now=='o'||now=='-')) {
+        
+        
+        else if (prev=='x'&& now=='o') {
             System.err.println("Invalid Change");
             return false;
         }
+        
+        else if (prev=='x'&& now=='-') {
+            //System.err.println("Invalid Change");
+            return false;
+        }
+        
+        else if (prev=='o'&& now=='x') {
+            //System.err.println("Invalid Change");
+            return false;
+        }
+        
+        
+        
         return true;
     }
     

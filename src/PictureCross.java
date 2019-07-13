@@ -44,7 +44,7 @@ public class PictureCross {
         //Solve Given
         solver.boardGivenRows(board);
         //Solve Partial single R/C
-        solver.boardPartialSingleClue(board);
+        solver.boardPartialClue(board);
         //Printing.printBoard(board);
         do {            
            isProgressing=false;

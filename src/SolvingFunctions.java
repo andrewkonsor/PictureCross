@@ -196,11 +196,55 @@ public class SolvingFunctions {
         return row;
     }
     
+    
+    public char[] partialClue(List<Integer> clue, char[] row) {
+        
+        int start = 0;
+        int end = 0;
+        int numOfClues = clue.size();
+        int currentClue = 0;
+        char[] result = row;
+
+        for (int c : clue) {
+            end = end + c;
+        }
+        end = end + numOfClues - 1;
+
+        for (int c : clue) {
+            
+            List<Integer> l = new ArrayList<>();
+            end = end - clue.get(currentClue);
+            
+            char[] temp = new char[row.length - end - start];
+            for (int i = 0; i < row.length - end - start; i++) {
+                temp[i] = '-';
+            }
+            int count = 0;
+
+            l.add(c);
+            temp = partialSingleClue(l, temp);
+            for (int i = start; i < row.length - end; i++) {
+                result[i] = temp[count];
+                count++;
+            }
+
+            //reset for next clue
+            
+            start = clue.get(currentClue) + 1 + start;
+            end--; 
+            currentClue++;
+            if (numOfClues==currentClue) break;
+
+        }
+
+        return result;
+    }
+    
     /**
      * Solve as many cells for singled clues
      * @param board 
      */
-    public void boardPartialSingleClue(Board board){
+    public void boardPartialClue(Board board){
 
         for (int r : (ArrayList<Integer>) board.getIncompletedRows()) {
             
@@ -529,16 +573,17 @@ public class SolvingFunctions {
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
-        String s = "----ox--";
+        String s = "--------";
         char [] row = s.toCharArray();
         char [] result = new char[row.length]; 
         int size = 8;
-        clue.add(3);
+        clue.add(4);
+        clue.add(1); 
 
         boolean hasGap=false;
  
-        System.out.println(solver.solveSingleClueCapped(clue, row));
-        System.out.println(s.indexOf("ox"));
+        System.out.println(solver.partialClue(clue, row));
+       // System.out.println(s.indexOf("ox"));
 
     }
 
