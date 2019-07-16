@@ -570,19 +570,82 @@ public class SolvingFunctions {
         return board.getIncompletedColumns().isEmpty() && board.getIncompletedColumns().isEmpty();
     }
 
+    public ArrayList <char[]> possibleSolutions(List<Integer> clues, char [] row, int start, int clueNum){
+        ArrayList <char[]> possibleSolutionsList = new ArrayList<>();
+        return possibleSolutionsList;
+    }
+    
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
+        List <Character []> possibleSolutions = new ArrayList<>();
         String s = "--------";
         char [] row = s.toCharArray();
-        char [] result = new char[row.length]; 
         int size = 8;
-        clue.add(4);
-        clue.add(1); 
+        clue.add(7);
 
-        boolean hasGap=false;
+        
+        
+        int numOfClues = clue.size();
+        int currentClue = 0;
+        char[] result = row;
+        int start = 0;
+        //Possibilities Function
+        
+        
+        char [] temp = new char[row.length];
+        
+        int numberOfPossilities;
+        int end = row.length;
+        int numberOfClues = clue.size();
+        int remainingClues= numberOfClues-currentClue-1;
+        
+        ArrayList <char []> possibleSolList  = new ArrayList<>();
+        
+        for (int i=currentClue+1;i<numberOfClues;i++) {
+            
+            end= end+clue.get(i);
+                
+            
+        }
+        end = end + remainingClues;
+        
+        numberOfPossilities = end-start-clue.get(currentClue)+1;
+        for (int i=0;i<numberOfPossilities;i++){//number of possible spots for row
+            temp=row.clone();
+            for (int j=0;j<clue.get(currentClue);j++){
+                if (row [start+j]=='x') break;
+                temp[start+j]='o';
+                
+            }
+            //check if temp is correct with clues
+            if (solver.isFinished(clue, temp)){
+                possibleSolList.add(temp);
+                System.out.println("Possile Sol added to");
+            }
+            else {
+                System.out.println(temp);
+                System.out.println("Is not correct");
+            }
+            start++;
+        }
+        
+        //return possibleSolList
+        for (char [] p:possibleSolList){
+            for (int k=0;k<p.length;k++){
+                System.out.print(p[k]);
+            }
+            System.out.println("");
+        }
+            
+
+        
+
+        
+    
  
-        System.out.println(solver.partialClue(clue, row));
+       //
+       //System.out.println(solver.partialClue(clue, row));
        // System.out.println(s.indexOf("ox"));
 
     }
