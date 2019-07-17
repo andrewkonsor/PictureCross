@@ -1,7 +1,11 @@
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -131,7 +135,7 @@ public class SolvingFunctions {
                 char[] newRow = solveRow(board.getClueRows().get(r), board.getRow(r));
                 board.changeRow(r, newRow);
                 completed.add(r);
-                System.out.println("Solved Row " + r);
+                //System.out.println("Solved Row " + r);
                 Printing.printBoard(board);
             }
         }
@@ -672,7 +676,7 @@ public class SolvingFunctions {
             
                 char[] newCol = possiblitiesCheck(possibleSolutions(board.getClueColumns().get(c), board.getColumn(c), 0, 0), board.getColumn(c));
                 if (!Arrays.equals(newCol, board.getColumn(c))){
-                System.out.print("PF Col: " + c + " solved to ");
+                //System.out.print("PF Col: " + c + " solved to ");
                     for (char d: newCol) System.out.print(d);
                     System.out.println("");
                 board.changeColumn(c, newCol);
@@ -688,31 +692,19 @@ public class SolvingFunctions {
         return changed;
     }
     
-    public static void main(String[] args) {
-        SolvingFunctions solver = new SolvingFunctions();
-        List<Integer> clue = new ArrayList<>();
-        String s = "xx-oooo--ooo--x";
-        char [] row = s.toCharArray();
-        int size = 15;
+    public static void main(String[] args) throws IOException {
 
-        clue.add(5);
-        clue.add(4);
-        
-        
+        for (int i = 0; i < 4; i++) {
+            System.out.println("Row" + i);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String  lines = br.readLine();    
 
-   
-        ArrayList <char []> possibleSolList  = new ArrayList<>();    
-        possibleSolList=solver.possibleSolutions(clue, row, 0, 0);
-//        for (char [] p:possibleSolList){
-//            for (int k=0;k<p.length;k++){
-//                System.out.print(p[k]);
-//            }
-//            System.out.println("");
-//        }
-        //System.out.println(solver.possiblitiesCheck(possibleSolList, row));
-        System.out.println(solver.solveRow(clue, row));
-        System.out.println();
+        String[] strs = lines.trim().split("\\s+");
 
+        for (int j = 0; j < strs.length; j++) {
+            System.out.println(Integer.parseInt(strs[j]));
+    }
+        }
 
 
     }

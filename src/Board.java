@@ -1,7 +1,10 @@
 
 import com.sun.javafx.scene.control.skin.VirtualFlow;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -315,10 +318,21 @@ public class Board {
         columns.get(14).add(1);
     }
     
-
+    public void board6Clues(){
+        
+    }
     
-    public Board(int size) {
-        this.size = size;
+    public Board() {
+        
+                System.out.println("Enter board size:");
+        
+        
+        try {
+        BufferedReader reader =
+                   new BufferedReader(new InputStreamReader(System.in));
+        this.size = Integer.parseInt(reader.readLine());
+        } catch (Exception e) {
+        }
         board = new char[size][size];
         
         for (int i=0;i<size;i++){
@@ -340,7 +354,36 @@ public class Board {
         }
         
         //Hard Coded values
-        board5Clues();
+        for (int i = 0; i < this.size; i++) {
+            System.out.println("Enter clues for row " + i);
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String lines = br.readLine();
+
+                String[] strs = lines.trim().split("\\s+");
+
+                for (int j = 0; j < strs.length; j++) {
+                    rows.get(i).add(Integer.parseInt(strs[j]));
+                }
+            } catch (Exception e) {
+            }
+        }
+        
+        for (int i = 0; i < this.size; i++) {
+            System.out.println("Enter clues for column " + i);
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String lines = br.readLine();
+
+                String[] strs = lines.trim().split("\\s+");
+
+                for (int j = 0; j < strs.length; j++) {
+                    columns.get(i).add(Integer.parseInt(strs[j]));
+                }
+            } catch (Exception e) {
+            }
+        }
+        //board5Clues();
     }
     
     

@@ -18,19 +18,10 @@ public class PictureCross {
 
     
     private static Board createBoard(){
-        int size=0;
-        System.out.println("Enter board size:");
+        Board board = new Board();
         
         
-        /*try {
-        BufferedReader reader =
-                   new BufferedReader(new InputStreamReader(System.in));
-        size = Integer.parseInt(reader.readLine());
-        } catch (Exception e) {
-        }
-        */
-        size=15;
-        Board board = new Board(size);
+        //validating board
         int x=0;
         int y=0;
         for (List<Integer> rows: board.getClueRows()){
@@ -51,43 +42,53 @@ public class PictureCross {
         
     
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
        SolvingFunctions solver = new SolvingFunctions();
         Board board = PictureCross.createBoard();
         boolean isProgressing= false;
         Printing.printBoard(board);
         
-        //Solve Given
-        solver.boardGivenRows(board);
-        //Solve Partial single R/C
-        solver.boardPartialClue(board);
-        //Printing.printBoard(board);
-        do {            
-           isProgressing=false;
-        //Check for finished rows
+//        //Solve Given
+//        solver.boardGivenRows(board);
+//        //Solve Partial single R/C
+//        solver.boardPartialClue(board);
+//        //Printing.printBoard(board);
+//        do {            
+//           isProgressing=false;
+//        //Check for finished rows
+//        if(solver.boardCompleteRows(board)) isProgressing=true;
+//
+//        //Solve Solvable Rows
+//        if(solver.boardSolveRows(board)) isProgressing=true;
+//        
+//        //Fill gaps in single clue rows
+//        if (solver.boardFillSingleClueWithGaps(board)) isProgressing=true;
+//        
+//        //Solve Caped single clues
+//        if (solver.boardSolveSingleClueCapped(board)) isProgressing=true;
+//        
+//        //Solve Edges
+//        if (solver.boardEdgeSolve(board)) isProgressing=true;
+//        
+//        //Check each R/C possibilities
+//        if (solver.boardPossiblitiesCheck(board)) isProgressing=true;
+//        
+//        } while (isProgressing && board.getIncompletedColumns().size()>0);
+
+        do {       
+            isProgressing=false;
+            if (solver.boardPossiblitiesCheck(board)) isProgressing=true;
+        } while (isProgressing);
+        
         if(solver.boardCompleteRows(board)) isProgressing=true;
-
-        //Solve Solvable Rows
-        if(solver.boardSolveRows(board)) isProgressing=true;
         
-        //Fill gaps in single clue rows
-        if (solver.boardFillSingleClueWithGaps(board)) isProgressing=true;
-        
-        //Solve Caped single clues
-        if (solver.boardSolveSingleClueCapped(board)) isProgressing=true;
-        
-        //Solve Edges
-        if (solver.boardEdgeSolve(board)) isProgressing=true;
-        
-        //Check each R/C possibilities
-        if (solver.boardPossiblitiesCheck(board)) isProgressing=true;
-        
-        } while (isProgressing && board.getIncompletedColumns().size()>0);
-
-        
-        
-        
-        if (solver.puzzleSolved(board)) System.out.println("\n Puzzle Solved!!!");
+        if (solver.puzzleSolved(board)) {
+            System.out.println("\n Puzzle Solved!!!");
+            
+        }
         else if (!isProgressing) System.out.println("Stuck");
+        long endTime = System.currentTimeMillis();
+        System.out.println(endTime-startTime);
     }
 
 }
