@@ -94,7 +94,7 @@ public class SolvingFunctions {
             }
         }
 
-        for (int i = 0; i < row.length - beggining - ending; i++) {
+        for (int i = beggining; i < row.length - ending; i++) {
             if (row[i] == 'x' && row[i + 1] == 'x') {
                 numFilledSpots++;
             }
@@ -660,6 +660,9 @@ public class SolvingFunctions {
             //char[] newRow = edgeSolve(board.getClueRows().get(r), board.getRow(r));
             char[] newRow = possiblitiesCheck(possibleSolutions(board.getClueRows().get(r), board.getRow(r), 0, 0), board.getRow(r));
             if (!Arrays.equals(newRow, board.getRow(r))){
+                System.out.print("PF Row: " + r + " solved to ");
+                for (char c: newRow) System.out.print(c);
+                System.out.println("");
                 board.changeRow(r, newRow);
                 changed=true;
             } 
@@ -669,6 +672,9 @@ public class SolvingFunctions {
             
                 char[] newCol = possiblitiesCheck(possibleSolutions(board.getClueColumns().get(c), board.getColumn(c), 0, 0), board.getColumn(c));
                 if (!Arrays.equals(newCol, board.getColumn(c))){
+                System.out.print("PF Col: " + c + " solved to ");
+                    for (char d: newCol) System.out.print(d);
+                    System.out.println("");
                 board.changeColumn(c, newCol);
                 changed=true;
                 }
@@ -685,11 +691,13 @@ public class SolvingFunctions {
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
-        String s = "---";
+        String s = "xx-oooo--ooo--x";
         char [] row = s.toCharArray();
-        int size = 8;
-        clue.add(3);
-        clue.add(2);
+        int size = 15;
+
+        clue.add(5);
+        clue.add(4);
+        
         
 
    
@@ -700,22 +708,14 @@ public class SolvingFunctions {
 //                System.out.print(p[k]);
 //            }
 //            System.out.println("");
-//            
-//            
-//        
 //        }
-//
-//        char [] o = new char[size];
-//        Arrays.fill(o, '-');
-//        System.out.println(solver.possiblitiesCheck(possibleSolList, row));
-            
-        char [] test = {'-','-','-'};
-        System.out.println(test);
-        System.out.println(row);
-        System.out.println(row.equals(test));
-        System.out.println(Arrays.equals(test, row));
+        //System.out.println(solver.possiblitiesCheck(possibleSolList, row));
+        System.out.println(solver.solveRow(clue, row));
+        System.out.println();
+
 
 
     }
 
 }
+    

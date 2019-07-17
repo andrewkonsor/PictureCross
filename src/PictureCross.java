@@ -20,6 +20,8 @@ public class PictureCross {
     private static Board createBoard(){
         int size=0;
         System.out.println("Enter board size:");
+        
+        
         /*try {
         BufferedReader reader =
                    new BufferedReader(new InputStreamReader(System.in));
@@ -27,9 +29,22 @@ public class PictureCross {
         } catch (Exception e) {
         }
         */
-        size=8;
+        size=15;
         Board board = new Board(size);
-
+        int x=0;
+        int y=0;
+        for (List<Integer> rows: board.getClueRows()){
+            for (int r:rows){
+                x=r+x;
+            }
+        }
+        for (List<Integer> col: board.getClueColumns()){
+            for (int c:col){
+                y=c+y;
+            }
+        }
+        if (x==y)
+        System.out.println("Is valid board");
            return board;
         }
     

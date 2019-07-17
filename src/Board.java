@@ -246,29 +246,76 @@ public class Board {
     }
     
     public void board5Clues(){
-        rows.get(0).add(8);
-        rows.get(1).add(6);
-        rows.get(2).add(6);
-        rows.get(3).add(8);
-        rows.get(4).add(2);
-        rows.get(5).add(2);
+        rows.get(0).add(1);
+        rows.get(0).add(1);
+        rows.get(1).add(1);
+        rows.get(1).add(2);
+        rows.get(1).add(4);
+        rows.get(2).add(5);
+        rows.get(2).add(3);
+        rows.get(3).add(1);
+        rows.get(3).add(3);
+        rows.get(3).add(3);
+        rows.get(4).add(1);
+        rows.get(4).add(7);
+        rows.get(4).add(1);
+        rows.get(5).add(1);
+        rows.get(5).add(9);
         rows.get(6).add(2);
-        rows.get(7).add(1);
-        rows.get(7).add(1);
-
-        columns.get(0).add(1);
-        columns.get(0).add(1);
+        rows.get(6).add(9);
+        rows.get(7).add(4);
+        rows.get(7).add(8);
+        rows.get(8).add(1);
+        rows.get(8).add(3);
+        rows.get(8).add(3);
+        rows.get(9).add(7);
+        rows.get(9).add(1);
+        rows.get(10).add(8);
+        rows.get(11).add(9);
+        rows.get(12).add(8);
+        rows.get(13).add(6);
+        rows.get(14).add(3);
+        
+        
+        columns.get(0).add(3);
         columns.get(1).add(4);
-        columns.get(2).add(4);
+        columns.get(2).add(3);
         columns.get(2).add(1);
-        columns.get(3).add(7);
-        columns.get(4).add(7);
-        columns.get(5).add(4);
-        columns.get(5).add(1);
+        columns.get(2).add(2);
+        columns.get(3).add(3);
+        columns.get(3).add(5);
+        columns.get(4).add(2);
+        columns.get(4).add(2);
+        columns.get(4).add(5);
+        columns.get(5).add(6);
+        columns.get(5).add(5);
+        columns.get(6).add(5);
         columns.get(6).add(4);
-        columns.get(7).add(1);
-        columns.get(7).add(1);
+        columns.get(7).add(5);
+        columns.get(7).add(4);
+        columns.get(8).add(4);
+        columns.get(8).add(4);
+        columns.get(9).add(1);
+        columns.get(9).add(4);
+        columns.get(9).add(4);
+        columns.get(10).add(2);
+        columns.get(10).add(3);
+        columns.get(10).add(3);
+        columns.get(11).add(2);
+        columns.get(11).add(3);
+        columns.get(11).add(3);
+        columns.get(12).add(3);
+        columns.get(12).add(4);
+        columns.get(12).add(3);
+        columns.get(13).add(3);
+        columns.get(13).add(3);
+        columns.get(13).add(2);
+        columns.get(14).add(1);
+        columns.get(14).add(3);
+        columns.get(14).add(1);
     }
+    
+
     
     public Board(int size) {
         this.size = size;
