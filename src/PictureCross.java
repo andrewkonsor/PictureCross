@@ -63,6 +63,9 @@ public class PictureCross {
         //Solve Edges
         if (solver.boardEdgeSolve(board)) isProgressing=true;
         
+        //Check each R/C possibilities
+        if (solver.boardPossiblitiesCheck(board)) isProgressing=true;
+        
         } while (isProgressing && board.getIncompletedColumns().size()>0);
 
         

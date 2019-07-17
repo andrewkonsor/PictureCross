@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -552,7 +553,7 @@ public class SolvingFunctions {
         }
 
         for (int c : (ArrayList<Integer>) board.getIncompletedColumns()) {
-            if (isFinished(board.getClueColumns().get(c), board.getColumn(c))) {
+            if (canEdgeSolve(board.getColumn(c))) {
                 char[] newCol = edgeSolve(board.getClueColumns().get(c), board.getColumn(c));
                 board.changeColumn(c, newCol);
                 changed=true;
@@ -570,83 +571,150 @@ public class SolvingFunctions {
         return board.getIncompletedColumns().isEmpty() && board.getIncompletedColumns().isEmpty();
     }
 
-    public ArrayList <char[]> possibleSolutions(List<Integer> clues, char [] row, int start, int clueNum){
-        ArrayList <char[]> possibleSolutionsList = new ArrayList<>();
-        return possibleSolutionsList;
+    public ArrayList<char[]> possibleSolutions(List<Integer> clues, char[] row, int start, int clueIndex) {
+        //System.out.println("Possible Solutions for depth: " + clueIndex );
+        //char [] temp = new char[row.length];
+        int currentClue = clueIndex;
+        int numberOfPossilities;
+        int end = row.length;
+        int numberOfClues = clues.size();
+        int remainingClues = numberOfClues - currentClue - 1;
+
+        ArrayList<char[]> possibleSolList = new ArrayList<>();
+
+        for (int i = currentClue + 1; i < numberOfClues; i++) {
+
+            end = end - clues.get(i);
+
+        }
+        end = end - remainingClues;
+
+        numberOfPossilities = end - start - clues.get(currentClue) + 1;
+        for (int i = 0; i < numberOfPossilities; i++) {//number of possible spots for row
+            char[] temp = row.clone();
+            for (int j = 0; j < clues.get(currentClue); j++) {
+                if (start + j < temp.length) {
+                    if (row[start + j] == 'x') {
+                        break;
+                    }
+                    temp[start + j] = 'o';
+                }
+
+            }
+            //currentClue++;
+            if (currentClue == numberOfClues - 1) {
+                //check if temp is correct with clues
+                if (isFinished(clues, temp)) {
+                    for (int z = 0; z < temp.length; z++) {
+                        if (temp[z] == '-') {
+                            temp[z] = 'x';
+                        }
+                    }
+                    possibleSolList.add(temp);
+                    //System.out.println("Possile Sol added to");
+                } else {
+                    //System.out.println(temp);
+                    
+                }
+            }else {
+                //int nextClue = currentClue+1;
+                possibleSolList.addAll(possibleSolutions(clues, temp, start + clues.get(currentClue), currentClue+1));
+            }
+            
+            start++;
+        }
+
+        return possibleSolList;
+    }
+    
+    public char [] possiblitiesCheck (List <char []> possibleList, char [] row){
+        boolean [] o = new boolean[row.length];
+        Arrays.fill(o, Boolean.TRUE);
+        boolean [] x = new boolean[row.length] ;
+        Arrays.fill(x, Boolean.TRUE);
+        char [] result = new char [row.length];
+        result= row.clone();
+        for (char [] p : possibleList){
+            for (int i=0; i<row.length;i++){
+                if (o[i]&& p[i]!='o'){
+                    o[i]=false;
+                }else if (x[i] && p[i]!='x'){
+                    x[i]= false;
+                }
+            }
+        }
+        
+        for (int i=0;i<row.length;i++){
+            if (o[i]) result[i]='o';
+            else if (x[i]) result [i]='x';
+        }
+        return result;
+        
+    }
+    
+        public boolean boardPossiblitiesCheck (Board board){
+
+        boolean changed=false;
+        for (int r : (ArrayList<Integer>) board.getIncompletedRows()) {
+            
+            //char[] newRow = edgeSolve(board.getClueRows().get(r), board.getRow(r));
+            char[] newRow = possiblitiesCheck(possibleSolutions(board.getClueRows().get(r), board.getRow(r), 0, 0), board.getRow(r));
+            if (!Arrays.equals(newRow, board.getRow(r))){
+                board.changeRow(r, newRow);
+                changed=true;
+            } 
+        }
+
+        for (int c : (ArrayList<Integer>) board.getIncompletedColumns()) {
+            
+                char[] newCol = possiblitiesCheck(possibleSolutions(board.getClueColumns().get(c), board.getColumn(c), 0, 0), board.getColumn(c));
+                if (!Arrays.equals(newCol, board.getColumn(c))){
+                board.changeColumn(c, newCol);
+                changed=true;
+                }
+            
+        }
+
+        if (changed) {
+            System.out.println("Solve Possibilities");
+            Printing.printBoard(board);
+        }
+        return changed;
     }
     
     public static void main(String[] args) {
         SolvingFunctions solver = new SolvingFunctions();
         List<Integer> clue = new ArrayList<>();
-        List <Character []> possibleSolutions = new ArrayList<>();
-        String s = "--------";
+        String s = "---";
         char [] row = s.toCharArray();
         int size = 8;
-        clue.add(7);
-
-        
-        
-        int numOfClues = clue.size();
-        int currentClue = 0;
-        char[] result = row;
-        int start = 0;
-        //Possibilities Function
-        
-        
-        char [] temp = new char[row.length];
-        
-        int numberOfPossilities;
-        int end = row.length;
-        int numberOfClues = clue.size();
-        int remainingClues= numberOfClues-currentClue-1;
-        
-        ArrayList <char []> possibleSolList  = new ArrayList<>();
-        
-        for (int i=currentClue+1;i<numberOfClues;i++) {
-            
-            end= end+clue.get(i);
-                
-            
-        }
-        end = end + remainingClues;
-        
-        numberOfPossilities = end-start-clue.get(currentClue)+1;
-        for (int i=0;i<numberOfPossilities;i++){//number of possible spots for row
-            temp=row.clone();
-            for (int j=0;j<clue.get(currentClue);j++){
-                if (row [start+j]=='x') break;
-                temp[start+j]='o';
-                
-            }
-            //check if temp is correct with clues
-            if (solver.isFinished(clue, temp)){
-                possibleSolList.add(temp);
-                System.out.println("Possile Sol added to");
-            }
-            else {
-                System.out.println(temp);
-                System.out.println("Is not correct");
-            }
-            start++;
-        }
-        
-        //return possibleSolList
-        for (char [] p:possibleSolList){
-            for (int k=0;k<p.length;k++){
-                System.out.print(p[k]);
-            }
-            System.out.println("");
-        }
-            
-
+        clue.add(3);
+        clue.add(2);
         
 
-        
-    
- 
-       //
-       //System.out.println(solver.partialClue(clue, row));
-       // System.out.println(s.indexOf("ox"));
+   
+        ArrayList <char []> possibleSolList  = new ArrayList<>();    
+        possibleSolList=solver.possibleSolutions(clue, row, 0, 0);
+//        for (char [] p:possibleSolList){
+//            for (int k=0;k<p.length;k++){
+//                System.out.print(p[k]);
+//            }
+//            System.out.println("");
+//            
+//            
+//        
+//        }
+//
+//        char [] o = new char[size];
+//        Arrays.fill(o, '-');
+//        System.out.println(solver.possiblitiesCheck(possibleSolList, row));
+            
+        char [] test = {'-','-','-'};
+        System.out.println(test);
+        System.out.println(row);
+        System.out.println(row.equals(test));
+        System.out.println(Arrays.equals(test, row));
+
 
     }
 
