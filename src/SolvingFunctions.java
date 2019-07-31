@@ -691,23 +691,5 @@ public class SolvingFunctions {
         }
         return changed;
     }
-    
-    public static void main(String[] args) throws IOException {
-
-        for (int i = 0; i < 4; i++) {
-            System.out.println("Row" + i);
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String  lines = br.readLine();    
-
-        String[] strs = lines.trim().split("\\s+");
-
-        for (int j = 0; j < strs.length; j++) {
-            System.out.println(Integer.parseInt(strs[j]));
-    }
-        }
-
-
-    }
-
 }
     

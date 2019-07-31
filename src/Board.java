@@ -353,7 +353,6 @@ public class Board {
         columns.add(new ArrayList<>());
         }
         
-        //Hard Coded values
         for (int i = 0; i < this.size; i++) {
             System.out.println("Enter clues for row " + i);
             try {
